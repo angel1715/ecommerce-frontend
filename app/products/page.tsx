@@ -9,7 +9,7 @@ export default function ProductsPage() {
 
   // 🔥 Obtener productos
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -30,7 +30,7 @@ export default function ProductsPage() {
     }
 
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/add`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,9 @@ export default function ProductsPage() {
             key={product._id}
             className="bg-white shadow-lg rounded-2xl p-4 hover:scale-105 transition"
           >
-            <h2 className="text-gray-600 text-xl font-semibold">{product.name}</h2>
+            <h2 className="text-gray-600 text-xl font-semibold">
+              {product.name}
+            </h2>
 
             <p className="text-gray-600 mt-2">${product.price}</p>
 

@@ -9,7 +9,7 @@ export default function CartPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
