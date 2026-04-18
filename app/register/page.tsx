@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import toast from "react-hot-toast";
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ export default function RegisterPage() {
     );
 
     if (res.ok) {
-      alert("User created");
+      toast.success("Registered successfully");
       router.push("/login");
     }
   };

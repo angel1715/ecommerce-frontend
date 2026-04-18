@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import toast from "react-hot-toast";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,8 +27,10 @@ export default function LoginPage() {
     if (res.ok) {
       localStorage.setItem("token", data.token);
 
-      alert("Login successful");
+      toast.success("Login successful");
       router.push("/products");
+    } else {
+      toast.error("Invalid credentials");
     }
   };
 

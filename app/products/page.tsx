@@ -2,10 +2,19 @@
 
 import { useEffect, useState } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<any[]>([]);
+  type Product = {
+    _id: string;
+    name: string;
+    price: number;
+  };
+
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   // 🔥 Obtener productos
   useEffect(() => {
@@ -25,7 +34,7 @@ export default function ProductsPage() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      alert("You must login first");
+      toast.error("You must login first");
       return;
     }
 
@@ -42,10 +51,10 @@ export default function ProductsPage() {
         }),
       });
 
-      alert("Added to cart");
+      toast.success("Added to cart");
     } catch (error) {
       console.error(error);
-      alert("Error adding to cart");
+      toast.error("Error adding to cart");
     }
   };
 
@@ -72,12 +81,23 @@ export default function ProductsPage() {
 
             <p className="text-gray-600 mt-2">${product.price}</p>
 
-            <button
-              onClick={() => addToCart(product._id)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 mt-4 rounded-xl w-full"
-            >
-              Add to Cart
-            </button>
+            <div className="flex gap-2 mt-4">
+              {/* 🔍 VER PRODUCTO */}
+              <button
+                onClick={() => router.push(`/products/${product._id}`)}
+                className="w-1/2 bg-gray-200 hover:bg-gray-300 text-black py-2 rounded-xl"
+              >
+                View
+              </button>
+
+              {/* 🛒 ADD TO CART */}
+              <button
+                onClick={() => addToCart(product._id)}
+                className="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl"
+              >
+                Add
+              </button>
+            </div>
           </div>
         ))}
       </div>
